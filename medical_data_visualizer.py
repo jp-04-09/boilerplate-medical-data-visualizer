@@ -18,25 +18,26 @@ df['gluc'] = np.where(df['gluc'] == 1, 0, np.where(df['gluc'] > 1, 1, df['gluc']
 # 4
 def draw_cat_plot():
     # 5
-    df_cat = None
-
+    df_cat = pd.melt(df, id_vars=['cardio'], value_vars=['cholesterol', 'gluc', 'smoke', 'alco', 'active', 'overweight'])
+    print(df_cat)
 
     # 6
-    df_cat = None
-    
+    df_cat = df_cat.groupby(['cardio', 'variable'])['value'].value_counts().reset_index(name='counts')   
+    print(df_cat)
 
-    # 7
-
-
-
-    # 8
-    fig = None
-
+    # 7 - 8
+    fig = sns.catplot(
+                    x='variable',       # x-axis: categorical feature
+                    y='counts',
+                    hue='value',        # color by value
+                    col='cardio',       # create separate plots for each 'cardio' value
+                    kind='bar',         # type of plot
+                    data=df_cat         # DataFrame to plot
+                )
 
     # 9
     fig.savefig('catplot.png')
     return fig
-
 
 # 10
 def draw_heat_map():

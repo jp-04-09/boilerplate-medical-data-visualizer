@@ -4,13 +4,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # 1
-df = None
+df = pd.read_csv('medical_examination.csv')
+df.info()
+print(df.head())
 
 # 2
-df['overweight'] = None
+df['overweight'] = np.where((df['weight'] / pow(df['height']/100, 2)) > 25, 1, 0)
 
 # 3
-
+df['cholesterol'] = np.where(df['cholesterol'] == 1, 0, np.where(df['cholesterol'] > 1, 1, df['cholesterol']))
+df['gluc'] = np.where(df['gluc'] == 1, 0, np.where(df['gluc'] > 1, 1, df['gluc']))
 
 # 4
 def draw_cat_plot():
